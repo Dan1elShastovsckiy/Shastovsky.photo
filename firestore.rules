@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    // For a single admin app, we'll check against a specific UID or email if needed.
+    // However, the user requested simple password protection for the admin page.
+    // To secure Firestore, we should still use Auth.
+    // For now, let's assume the admin will sign in via Firebase Auth.
+    function isAdmin() {
+      return isSignedIn(); // Simplification: any authed user is admin for this prototype
+    }
+
+    function isValidPost(data) {
+      return data.title is string && data.title.size() <= 200 &&
+             data.slug is string && data.slug.size() <= 200 &&
+             data.type in ['country', 'theme'] &&
+             data.description is string && data.description.size() <= 2000 &&
+             data.cover is string &&
+             data.status in ['published', 'draft'];
+    }
+
+    match /posts/{postId} {
+      allow read: if resource.data.status == 'published' || isAdmin();
+      allow create: if isAdmin() && isValidPost(request.resource.data);
+      allow update: if isAdmin() && isValidPost(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

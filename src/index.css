@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer utilities {
+  .glass {
+    background-color: rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  
+  :root.dark .glass {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card {
+    @apply rounded-[2rem] transition-all duration-500 hover:shadow-2xl hover:border-black/20;
+    background-color: rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  :root.dark .glass-card {
+    @apply hover:border-white/20;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  
+  .glass-input {
+    @apply w-full rounded-2xl p-4 outline-none focus:ring-1 transition-all;
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: inherit;
+  }
+
+  :root.dark .glass-input {
+    @apply focus:ring-white/40;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(130px, auto);
+    gap: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .bento-grid {
+    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(250px, auto);
+  }
+}
+
+@theme {
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 dark:bg-[#050505] dark:text-[#f8fafc] transition-colors duration-500 min-h-screen;
+  background-attachment: fixed;
+}
+

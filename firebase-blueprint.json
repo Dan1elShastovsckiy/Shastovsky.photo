@@ -1,0 +1,37 @@
+{
+  "entities": {
+    "Post": {
+      "title": "Post",
+      "description": "A photo or video collection post",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Display title of the collection (EN)" },
+        "titleRu": { "type": "string", "description": "Display title of the collection (RU)" },
+        "slug": { "type": "string", "description": "URL slug for the post" },
+        "type": { "type": "string", "enum": ["country", "theme"], "description": "Category type" },
+        "country": { "type": "string", "description": "Country if type is country (EN)" },
+        "countryRu": { "type": "string", "description": "Country if type is country (RU)" },
+        "theme": { "type": "string", "description": "Theme name if type is theme (EN)" },
+        "themeRu": { "type": "string", "description": "Theme name if type is theme (RU)" },
+        "description": { "type": "string", "description": "Detailed description (EN)" },
+        "descriptionRu": { "type": "string", "description": "Detailed description (RU)" },
+        "photos": { "type": "array", "items": { "type": "string" }, "description": "Array of photo URLs" },
+        "videos": { "type": "array", "items": { "type": "string" }, "description": "Array of YouTube links" },
+        "tags": { "type": "array", "items": { "type": "string" }, "description": "Tags for filtering" },
+        "section": { "type": "string", "description": "Section title to group posts under (EN)" },
+        "sectionRu": { "type": "string", "description": "Section title to group posts under (RU)" },
+        "cover": { "type": "string", "description": "Primary cover image URL" },
+        "status": { "type": "string", "enum": ["published", "draft"], "description": "Publication status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["title", "slug", "type", "description", "cover", "status"]
+    }
+  },
+  "firestore": {
+    "/posts/{postId}": {
+      "schema": "Post",
+      "description": "Public posts collection"
+    }
+  }
+}

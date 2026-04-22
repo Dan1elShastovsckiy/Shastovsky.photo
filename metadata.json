@@ -1,0 +1,8 @@
+{
+  "name": "SHASTOVSKY.PHOTO",
+  "description": "A high-end photo and video portfolio landing page with liquid glass design and a mobile-friendly admin panel.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": []
+}
